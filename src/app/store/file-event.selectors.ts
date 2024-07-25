@@ -1,14 +1,14 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import * as fromFileEvent from './file-event.reducer';
 
-export const selectFileEventState = createFeatureSelector<fromFileEvent.FileEventState>('file-event');
+export const selectFileEventState = createFeatureSelector<fromFileEvent.FileEventState>('FileEvent');
 
 export const selectFileEventDetail = createSelector(
   selectFileEventState,
   (state: fromFileEvent.FileEventState) => 
   {
-    console.log(state);
-    return state.fileEvent;
+    console.log(`selectFileEventDetail ${state} `);
+    return state.fileEventList;
   }
 );
 

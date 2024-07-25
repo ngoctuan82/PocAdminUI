@@ -41,7 +41,6 @@ export class InvalidDataComponent implements  OnInit{
     this.invalidDataList$.subscribe(data => {
       
       console.log("Hit");
-      console.log(data);
 
       this.dataSource.data = data;
       this.dataSource.paginator = this.paginator;
@@ -55,6 +54,7 @@ export class InvalidDataComponent implements  OnInit{
 
   onRowClick(referenceId: number)
   {
+    console.log(`onRowClick ${referenceId}`);
     this.dialog.open(FileEventComponent,{ data: {referenceId: referenceId} });
   }
 }

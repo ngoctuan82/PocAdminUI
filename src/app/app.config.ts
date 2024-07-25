@@ -22,8 +22,8 @@ export const appConfig: ApplicationConfig = {
     provideEffects([InvalidDataEffects, FileEventEffects]),
     provideHttpClient(),
     provideStore({
-      InvalidData: invalidDataReducer,
-      fileEvent: fileEventReducer,        
+      InvalidData: invalidDataReducer, // Invalid Data
+      FileEvent: fileEventReducer,     // File Event   
     }),
     importProvidersFrom(MatTableModule, MatPaginatorModule, MatSortModule)
   ]

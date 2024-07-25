@@ -17,7 +17,7 @@ const initialState: InvalidDataState = {
 export const invalidDataReducer = createReducer(
   initialState,
   on(InvalidDataActions.getInvalidDataList, state => ({
-    ...state,
+    ...state, 
     loading: true,
     error: null
   })),

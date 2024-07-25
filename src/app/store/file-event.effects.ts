@@ -8,17 +8,21 @@ import * as FileEventActions from './file-event.actions';
 @Injectable()
 export class FileEventEffects {
   loadFileEvent$ = createEffect(() =>
-
     this.actions$.pipe(
       ofType(FileEventActions.getFileEventByRefId),
-
-      switchMap(() =>
-        this.fileEventService.getAll().pipe(
-          map(fileEventList => FileEventActions.getFileEventByIdSuccess({ fileEventList })),
-          catchError(error => of(FileEventActions.getFileEventByIdFailure({ error })))
-        )
-      )
-      
+      switchMap(action => {
+        const referenceId = action.referenceId;
+        return this.fileEventService.getByRefId(referenceId)
+            .pipe(
+              map(data =>
+                {
+                  console.log(`FileEventList ${data}`);
+                  return FileEventActions.getFileEventByIdSuccess({ fileEventList: data });
+                } ,
+                catchError(error => of(FileEventActions.getFileEventByIdFailure({ error })))
+              )
+            )
+      })
     )
   );
 

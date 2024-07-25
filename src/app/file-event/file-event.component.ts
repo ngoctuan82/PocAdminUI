@@ -23,8 +23,11 @@ export class FileEventComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    console.log(`ngOnInit ${this.data.referenceId}`);
     this.store.dispatch(FileEventActions.getFileEventByRefId({referenceId: this.data.referenceId}));
     this.fileEventList$ = this.store.select(fromFileEvent.selectFileEventDetail);
-  
+    this.fileEventList$.subscribe(fileEvent => {
+      console.log(`fileEvent ${fileEvent}`);
+    });  
   }
 }

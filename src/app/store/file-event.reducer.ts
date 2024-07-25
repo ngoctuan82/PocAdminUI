@@ -3,13 +3,13 @@ import * as FileEventActions from './file-event.actions';
 import { FileEvent } from '../model/file-event.model';
 
 export interface FileEventState {
-  fileEvent: FileEvent[];
+  fileEventList: FileEvent[];
   loading: boolean;
   error: any;
 }
 
 const initialState: FileEventState = {
-  fileEvent: [] as FileEvent[],
+  fileEventList: [] , 
   loading: false,
   error: null
 };

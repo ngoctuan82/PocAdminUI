@@ -1,0 +1,23 @@
+<h2>File Event Details</h2> 
+<table >
+  <thead>
+    <tr>
+      <th>Filename</th>
+      <th>Date</th>
+      <th>Event ID</th>
+      <th>Reference ID</th>
+    </tr>
+  </thead>
+  <tbody>
+          <tr *ngFor="let item of fileEventList$ | async">
+              <td>{{ item.filename }}</td>
+              <td>{{ item.date }}</td>
+              <td>{{ item.eventId }}</td>
+              <td>{{ item.referenceId }}</td>
+            </tr>
+  </tbody>
+</table>
+
+<ng-template #loading>
+  <p>Loading File Event details...</p>
+</ng-template>

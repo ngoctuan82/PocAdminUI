@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-invalid-data',
@@ -39,9 +40,6 @@ export class InvalidDataComponent implements  OnInit{
     this.error$ = this.store.select(selectInvalidDataError);
 
     this.invalidDataList$.subscribe(data => {
-      
-      console.log("Hit");
-
       this.dataSource.data = data;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -54,7 +52,6 @@ export class InvalidDataComponent implements  OnInit{
 
   onRowClick(referenceId: number)
   {
-    console.log(`onRowClick ${referenceId}`);
     this.dialog.open(FileEventComponent,{ data: {referenceId: referenceId} });
   }
 }

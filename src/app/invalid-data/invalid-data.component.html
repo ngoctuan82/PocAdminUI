@@ -3,7 +3,7 @@
 
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" multiTemplateDataRows>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8"  matSort>
     <!-- ID Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -34,11 +34,5 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns; trackBy: trackByFn" (click)="highlight(row)" [class.highlight]="highlightedRow === row"></tr> <!-- Use trackBy function -->
+    <tr mat-row *matRowDef="let row; columns: displayedColumns; " (click)="highlight(row)" [class.highlight]="highlightedRow === row"></tr>
 </table>
-
-<style>
-  .highlight {
-    background-color: #f0f0f0;
-  }
-</style>

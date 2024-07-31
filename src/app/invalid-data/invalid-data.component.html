@@ -1,6 +1,7 @@
 <div *ngIf="loading$ | async">Loading...</div>
 <div *ngIf="error$ | async as error">Error: {{ error }}</div>
 
+<input #filterInput (input)="onFilterChange()" placeholder="Filter data...">
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"  matSort>

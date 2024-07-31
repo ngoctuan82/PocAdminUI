@@ -6,12 +6,14 @@ export interface InvalidDataState {
   invalidDataList: InvalidData[];
   loading: boolean;
   error: any;
+  filter: any;
 }
 
 const initialState: InvalidDataState = {
   invalidDataList: [],
   loading: false,
-  error: null
+  error: null,
+  filter: null
 };
 
 export const invalidDataReducer = createReducer(
@@ -30,5 +32,9 @@ export const invalidDataReducer = createReducer(
     ...state,
     loading: false,
     error
-  }))
+  })),
+  on(InvalidDataActions.setInvalidDataFilter, (state, { filter }) => ({
+    ...state,
+    filter
+  })),
 );

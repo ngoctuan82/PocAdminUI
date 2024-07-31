@@ -12,3 +12,8 @@ export const getInvalidDataListFailure = createAction(
   '[InvalidData] Get List Failure',
   props<{ error: any }>()
 );
+
+export const setInvalidDataFilter = createAction(
+  '[Invalid Data] Set Filter', 
+  props<{ filter: string }>()
+);

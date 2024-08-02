@@ -1,6 +1,5 @@
 import { createSelector, createFeatureSelector, select } from '@ngrx/store';
 import * as fromInvalidData from './invalid-data.reducer';
-import { setInvalidDataFilter } from './invalid-data.actions';
 
 export const selectInvalidDataState = createFeatureSelector<fromInvalidData.InvalidDataState>('InvalidData');
 
@@ -21,10 +20,3 @@ export const selectInvalidDataError = createSelector(
   selectInvalidDataState,
   (state: fromInvalidData.InvalidDataState) => state.error
 );
-
-export const selectFilteredInvalidData = createSelector(
-  selectInvalidDataList,
-  setInvalidDataFilter,
-  (data, filter) => data.filter(item => item.name.toLowerCase().includes(filter.filter.toLowerCase()))
-);
-

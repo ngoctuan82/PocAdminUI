@@ -32,9 +32,5 @@ export const invalidDataReducer = createReducer(
     ...state,
     loading: false,
     error
-  })),
-  on(InvalidDataActions.setInvalidDataFilter, (state, { filter }) => ({
-    ...state,
-    filter
-  })),
+  }))
 );

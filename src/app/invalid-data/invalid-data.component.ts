@@ -1,11 +1,11 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { map, Observable,async, tap, takeUntil, Subject, combineLatest, switchMap  } from 'rxjs';
+import { map, Observable,async, tap, takeUntil, Subject, combineLatest, switchMap, debounceTime, fromEvent, distinctUntilChanged  } from 'rxjs';
 import { FileEventComponent } from '../file-event/file-event.component';
 import { InvalidData } from '../model/invalid-data.model';
 import * as DataActions from '../store/invalid-data.actions';
-import { selectInvalidDataList, selectInvalidDataLoading, selectInvalidDataError, selectFilteredInvalidData } from '../store/invalid-data.selectors';
+import { selectInvalidDataList, selectInvalidDataLoading, selectInvalidDataError } from '../store/invalid-data.selectors';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -43,14 +43,8 @@ export class InvalidDataComponent implements  OnInit{
     this.invalidDataList$ = this.store.select(selectInvalidDataList);
     this.loading$ = this.store.select(selectInvalidDataLoading);
     this.error$ = this.store.select(selectInvalidDataError);
-    this.filteredData$ = this.store.select(selectFilteredInvalidData);
     
-    // combine data
-    combineLatest([this.invalidDataList$, this.filteredData$])
-    .pipe(takeUntil(this.destroy$), map(([data, filter])=>{
-      console.log('data filter');
-      return filter ?? data;
-    }))
+    this.invalidDataList$.pipe(takeUntil(this.destroy$))
     .subscribe(data => {
         this.dataSource.data = data;
         this.dataSource.paginator = this.paginator;
@@ -58,11 +52,23 @@ export class InvalidDataComponent implements  OnInit{
       });
   }
 
+  ngAfterViewInit() {
+    if(this.filterInput) {
+      fromEvent<Event>(this.filterInput.nativeElement, 'input').pipe(
+        map((event: Event) => (event.target as HTMLInputElement).value),
+        debounceTime(300),
+        distinctUntilChanged())
+        .subscribe(filterValue => {
+          this.applyFilter(filterValue);
+        });
+    }
+  }
+
   highlight(row: InvalidData){
     this.highlightedRow = row;
   }
 
-  onRowClick(referenceId: number)
+  onDetailClick(referenceId: number)
   {
     this.dialog.open(FileEventComponent,{ data: {referenceId: referenceId} });
   }
@@ -72,9 +78,12 @@ export class InvalidDataComponent implements  OnInit{
     this.destroy$.complete();
   }
 
-  onFilterChange() {
-    const filterValue = this.filterInput.nativeElement.value;
-    this.store.dispatch(DataActions.setInvalidDataFilter({ filter: filterValue }));
-  }
+  applyFilter(filterValue: string) {
+    console.log(`${filterValue} applied`);
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }

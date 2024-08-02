@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 import { InvalidData } from '../model/invalid-data.model';
 
 @Injectable({
@@ -13,12 +13,14 @@ export class InvalidDataService {
 
   getAll(): Observable<InvalidData[]> {
     //return this.http.get<InvalidData[]>(this.apiUrl);
+    // mock wait for emulate the response from api
+
     return of([
       { id: 1, name: 'Model A 1', effectiveDate: new Date(), value: 100, referenceId: 101 },
       { id: 2, name: 'Model A 2', effectiveDate: new Date(), value: 200, referenceId: 102 },
       { id: 3, name: 'Model A 3', effectiveDate: new Date(), value: 300, referenceId: 103 },
       // Add more mock data as needed
-    ]);
+    ]).pipe(delay(2000));
   }
 
   getById(id: number): Observable<InvalidData> {

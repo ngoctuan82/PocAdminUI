@@ -9,6 +9,8 @@ import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/
 import { CommonModule, NgFor } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import * as InvalidDataActions from '../store/invalid-data.actions';
+import { InvalidData } from '../model/invalid-data.model';
 
 @Component({
   selector: 'app-file-event',
@@ -25,7 +27,7 @@ export class FileEventComponent implements OnInit {
   error$: Observable<any> | undefined;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { referenceId: number },
+    @Inject(MAT_DIALOG_DATA) public data:  InvalidData,
     private store: Store
   ) {}
 
@@ -41,4 +43,9 @@ export class FileEventComponent implements OnInit {
       this.dataSource.data = fileEvent;
     });
   }
+
+  validateData() {
+    this.store.dispatch(InvalidDataActions.validateInvalidData({ id: this.data.id }));
+  }
+  
 }

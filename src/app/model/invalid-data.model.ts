@@ -4,4 +4,5 @@ export interface InvalidData{
     effectiveDate: Date;
     value: number;
     referenceId: number;
+    validated:boolean;
   }

@@ -27,6 +27,8 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
+<button mat-raised-button color="primary" (click)="validateData()">Validate</button>
+
 <ng-template #loading>
   <p>Loading File Event details...</p>
 </ng-template>

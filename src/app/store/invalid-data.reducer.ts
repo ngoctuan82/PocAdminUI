@@ -32,5 +32,16 @@ export const invalidDataReducer = createReducer(
     ...state,
     loading: false,
     error
-  }))
+  })),
+  on(InvalidDataActions.validateInvalidData, (state, { id }) => 
+  {
+    console.log('Validating data with id: ' , id);
+    return {
+    ...state,
+    invalidDataList: state.invalidDataList.map(item =>
+      item.id === id ? { ...item, validated: true } : item
+    )
+    }
+})
+  
 );

@@ -64,13 +64,8 @@ export class InvalidDataComponent implements  OnInit{
     }
   }
 
-  highlight(row: InvalidData){
-    this.highlightedRow = row;
-  }
-
-  onDetailClick(referenceId: number)
-  {
-    this.dialog.open(FileEventComponent,{ data: {referenceId: referenceId} });
+  onDetailClick(invalidData: InvalidData) { 
+    this.dialog.open(FileEventComponent,{ data: invalidData });
   }
   
   ngOnDestroy(): void {

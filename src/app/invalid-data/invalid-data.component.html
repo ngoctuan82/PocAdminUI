@@ -10,32 +10,32 @@
     <!-- ID Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      <td mat-cell *matCellDef="let data"> {{data.id}} </td>
     </ng-container>
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name | pure}} </td> <!-- Use pure pipe -->
+      <td mat-cell *matCellDef="let data"> {{data.name | pure}} </td> <!-- Use pure pipe -->
     </ng-container>
     <!-- Effective Date Column -->
     <ng-container matColumnDef="effectiveDate">
       <th mat-header-cell *matHeaderCellDef> Effective Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.effectiveDate}} </td>
+      <td mat-cell *matCellDef="let data"> {{data.effectiveDate}} </td>
     </ng-container>
     <!-- Value Column -->
     <ng-container matColumnDef="value">
       <th mat-header-cell *matHeaderCellDef> Value </th>
-      <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+      <td mat-cell *matCellDef="let data"> {{data.value}} </td>
     </ng-container>
     <!-- referenceId Column -->
     <ng-container matColumnDef="referenceId">
       <th mat-header-cell *matHeaderCellDef> Detail </th>
-      <td mat-cell *matCellDef="let element">  
-        <button mat-icon-button (click)=onDetailClick(element.referenceId)>
+      <td mat-cell *matCellDef="let data">  
+        <button mat-icon-button (click)=onDetailClick(data)>
         <mat-icon>more_vert</mat-icon>
       </button>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns; " (click)="highlight(row)" [class.highlight]="highlightedRow === row"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns; "  [ngClass]="{'validated-row': row.validated}"></tr>    
 </table>

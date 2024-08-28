@@ -25,6 +25,7 @@ export class FileEventComponent implements OnInit {
   dataSource = new MatTableDataSource<FileEvent>();
   loading$: Observable<boolean> | undefined;
   error$: Observable<any> | undefined;
+  validateButtonText: string = 'Validate';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data:  InvalidData,
@@ -32,7 +33,7 @@ export class FileEventComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(`ngOnInit ${this.data.referenceId}`);
+
     this.store.dispatch(FileEventActions.getFileEventByRefId({ referenceId: this.data.referenceId }));
     this.fileEventList$ = this.store.select(fromFileEvent.selectFileEventDetail);
     this.loading$ = this.store.select(fromFileEvent.selectFileEventLoading);
@@ -44,8 +45,9 @@ export class FileEventComponent implements OnInit {
     });
   }
 
-  validateData() {
-    this.store.dispatch(InvalidDataActions.validateInvalidData({ id: this.data.id }));
+  toggleValidateData() {
+    this.validateButtonText = this.validateButtonText === 'Validate'? 'Unvalidate' : 'Validate';
+    this.store.dispatch(InvalidDataActions.toggleCheckedInvalidData({ id: this.data.id }));
   }
   
 }

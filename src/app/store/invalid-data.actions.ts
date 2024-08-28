@@ -13,7 +13,7 @@ export const getInvalidDataListFailure = createAction(
   props<{ error: any }>()
 );
 
-export const validateInvalidData = createAction(
+export const toggleCheckedInvalidData = createAction(
   '[InvalidData] Validate Invalid Data',
   props<{ id: number }>()
 );

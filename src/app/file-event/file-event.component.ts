@@ -21,7 +21,7 @@ import { InvalidData } from '../model/invalid-data.model';
 })
 export class FileEventComponent implements OnInit {
   fileEventList$: Observable<FileEvent[]> | undefined;
-  displayedColumns: string[] = ['filename', 'date', 'eventId', 'referenceId'];
+  displayedColumns: string[] = ['fileName', 'eventDate', 'id', 'referenceId'];
   dataSource = new MatTableDataSource<FileEvent>();
   loading$: Observable<boolean> | undefined;
   error$: Observable<any> | undefined;

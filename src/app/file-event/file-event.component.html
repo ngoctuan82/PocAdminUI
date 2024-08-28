@@ -3,19 +3,19 @@
 
 <h2>File Event Details</h2>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <ng-container matColumnDef="filename">
+  <ng-container matColumnDef="fileName">
     <th mat-header-cell *matHeaderCellDef> Filename </th>
-    <td mat-cell *matCellDef="let element"> {{element.filename}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.fileName}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="date">
+  <ng-container matColumnDef="eventDate">
     <th mat-header-cell *matHeaderCellDef> Date </th>
-    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.eventDate}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="eventId">
+  <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> Event ID </th>
-    <td mat-cell *matCellDef="let element"> {{element.eventId}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
   </ng-container>
 
   <ng-container matColumnDef="referenceId">

@@ -1,6 +1,6 @@
 export interface FileEvent {
-    filename: string;
-    date: Date;
-    eventId: number;
+    fileName: string;
+    eventDate: Date;
+    id: number;
     referenceId: number;
   }

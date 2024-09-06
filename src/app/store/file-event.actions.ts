@@ -3,7 +3,7 @@ import { FileEvent } from '../model/file-event.model';
 
 export const getFileEventByRefId = createAction(
   '[FileEvent] Get By Id',
-  props<{ referenceId: number }>()
+  props<{ referenceId: string }>()
 );
 
 export const getFileEventByIdSuccess = createAction(

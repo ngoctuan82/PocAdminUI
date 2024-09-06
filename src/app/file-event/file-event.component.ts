@@ -21,7 +21,7 @@ import { InvalidData } from '../model/invalid-data.model';
 })
 export class FileEventComponent implements OnInit {
   fileEventList$: Observable<FileEvent[]> | undefined;
-  displayedColumns: string[] = ['fileName', 'eventDate', 'id', 'referenceId'];
+  displayedColumns: string[] = ['id', 'fileName', 'directory', 'created'];
   dataSource = new MatTableDataSource<FileEvent>();
   loading$: Observable<boolean> | undefined;
   error$: Observable<any> | undefined;
@@ -33,8 +33,7 @@ export class FileEventComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
-    this.store.dispatch(FileEventActions.getFileEventByRefId({ referenceId: this.data.referenceId }));
+    this.store.dispatch(FileEventActions.getFileEventByRefId({ referenceId: this.data.ca_RefId || ''}));
     this.fileEventList$ = this.store.select(fromFileEvent.selectFileEventDetail);
     this.loading$ = this.store.select(fromFileEvent.selectFileEventLoading);
     this.error$ = this.store.select(fromFileEvent.selectFileEventError);
@@ -47,7 +46,7 @@ export class FileEventComponent implements OnInit {
 
   toggleValidateData() {
     this.validateButtonText = this.validateButtonText === 'Validate'? 'Unvalidate' : 'Validate';
-    this.store.dispatch(InvalidDataActions.toggleCheckedInvalidData({ id: this.data.id }));
+    this.store.dispatch(InvalidDataActions.toggleCheckedInvalidData({ id: this.data.event_Id }));
   }
   
 }

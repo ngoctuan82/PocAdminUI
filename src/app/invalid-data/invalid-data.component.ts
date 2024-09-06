@@ -22,7 +22,7 @@ import { InvalidDataState } from '../store/invalid-data.reducer';
   styleUrl: './invalid-data.component.css'
 })
 export class InvalidDataComponent implements  OnInit{
-  displayedColumns: string[] = ['id', 'name', 'effectiveDate', 'value', 'referenceId'];
+  displayedColumns: string[] = ['mappedId', 'event_Id', 'event_ActionId', 'event_SecId', 'event_FileId', 'event_EffectiveDate', 'event_AmmendmentDate', 'event_FileName', 'ca_Id', 'ca_EffectiveDate', 'ca_AmmendmentDate', 'ca_Created', 'ca_RefId'];
   dataSource = new MatTableDataSource<InvalidData>();
   highlightedRow: InvalidData | null = null;
 

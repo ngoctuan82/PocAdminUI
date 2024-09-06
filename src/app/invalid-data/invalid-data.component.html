@@ -1,40 +1,68 @@
 <div *ngIf="loading$ | async" class="loading-overlay">
   <div class="spinner"></div>
 </div>
-<div *ngIf="error$ | async as error">Error: {{ error }}</div>
+<div *ngIf="error$ | async as error">Error: {{ error.message }}</div>
 
 <input #filterInput placeholder="Filter data...">
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"  matSort>
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let data"> {{data.id}} </td>
-    </ng-container>
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let data"> {{data.name | pure}} </td> <!-- Use pure pipe -->
-    </ng-container>
-    <!-- Effective Date Column -->
-    <ng-container matColumnDef="effectiveDate">
-      <th mat-header-cell *matHeaderCellDef> Effective Date </th>
-      <td mat-cell *matCellDef="let data"> {{data.effectiveDate}} </td>
-    </ng-container>
-    <!-- Value Column -->
-    <ng-container matColumnDef="value">
-      <th mat-header-cell *matHeaderCellDef> Value </th>
-      <td mat-cell *matCellDef="let data"> {{data.value}} </td>
-    </ng-container>
-    <!-- referenceId Column -->
-    <ng-container matColumnDef="referenceId">
-      <th mat-header-cell *matHeaderCellDef> Detail </th>
-      <td mat-cell *matCellDef="let data">  
-        <button mat-icon-button (click)=onDetailClick(data)>
-        <mat-icon>more_vert</mat-icon>
-      </button>
-    </ng-container>
+  <ng-container matColumnDef="mappedId">
+    <th *matHeaderCellDef mat-sort-header>Mapped ID</th>
+    <td *matCellDef="let element">{{element.mappedId}}</td>
+  </ng-container>
+  <ng-container matColumnDef="event_Id">
+    <th *matHeaderCellDef mat-sort-header>Event_Id</th>
+    <td *matCellDef="let element">{{element.event_Id}}</td>
+  </ng-container>
+  <ng-container matColumnDef="event_ActionId">
+    <th *matHeaderCellDef mat-sort-header>Event_ActionId</th>
+    <td *matCellDef="let element">{{element.event_ActionId}}</td>
+  </ng-container>
+  <ng-container matColumnDef="event_SecId">
+    <th *matHeaderCellDef mat-sort-header>Event_SecId</th>
+    <td *matCellDef="let element">{{element.event_SecId}}</td>
+  </ng-container>
+  <ng-container matColumnDef="event_FileId">
+    <th *matHeaderCellDef mat-sort-header>Event_FileId</th>
+    <td *matCellDef="let element">{{element.event_FileId}}</td>
+  </ng-container>
+  <ng-container matColumnDef="event_EffectiveDate">
+    <th *matHeaderCellDef mat-sort-header>Event_EffectiveDate</th>
+    <td *matCellDef="let element">{{element.event_EffectiveDate}}</td>
+  </ng-container>
+  <ng-container matColumnDef="event_AmmendmentDate">
+    <th *matHeaderCellDef mat-sort-header>Event_AmmendmentDate</th>
+    <td *matCellDef="let element">{{element.event_AmmendmentDate }}</td>
+  </ng-container>
+  <ng-container matColumnDef="event_FileName">
+    <th *matHeaderCellDef mat-sort-header>Event_FileName </th>
+    <td *matCellDef="let element">{{element.event_FileName}}</td>
+  </ng-container>
+  <ng-container matColumnDef="ca_Id">
+    <th *matHeaderCellDef mat-sort-header>ca_Id</th>
+    <td *matCellDef="let element">{{element.ca_Id}}</td>
+  </ng-container>
+  <ng-container matColumnDef="ca_EffectiveDate">
+    <th *matHeaderCellDef mat-sort-header>Ca_EffectiveDate</th>
+    <td *matCellDef="let element">{{element.ca_EffectiveDate}}</td>
+  </ng-container>
+  <ng-container matColumnDef="ca_AmmendmentDate">
+    <th *matHeaderCellDef mat-sort-header>Ca_AmmendmentDate</th>
+    <td *matCellDef="let element">{{element.ca_AmmendmentDate }}</td>
+  </ng-container>
+  <ng-container matColumnDef="ca_Created">
+    <th *matHeaderCellDef mat-sort-header>ca_Created</th>
+    <td *matCellDef="let element">{{element.ca_Created }}</td>
+  </ng-container>
+  <ng-container matColumnDef="ca_RefId">
+    <th *matHeaderCellDef mat-sort-header>RefId</th>
+    <td *matCellDef="let element">
+      <button mat-icon-button (click)=onDetailClick(element)></button>
+      <mat-icon>more_vert</mat-icon>
+    </td>
+    
+  </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns; "  [ngClass]="{'validated-row': row.validated}"></tr>    

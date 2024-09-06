@@ -39,7 +39,7 @@ export const invalidDataReducer = createReducer(
     return {
     ...state,
     invalidDataList: state.invalidDataList.map(item =>
-      item.id === id ? { ...item, validated: !item.validated } : item
+      item.event_Id === id ? { ...item, validated: !item.validated } : item
     )
     }
 })

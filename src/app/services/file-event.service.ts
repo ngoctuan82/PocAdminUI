@@ -7,7 +7,7 @@ import { FileEvent } from '../model/file-event.model'
   providedIn: 'root'
 })
 export class FileEventService {
-  private apiUrl = 'https://localhost:44322/api/FileEvent/ByReferenceId'; // Api end point
+  private apiUrl = 'https://localhost:7068/api/FileEvent/ByReferenceId'; // Api end point
 
   mockData: FileEvent[] = []; //
 

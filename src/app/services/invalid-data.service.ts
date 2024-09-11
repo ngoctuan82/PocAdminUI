@@ -7,7 +7,7 @@ import { InvalidData } from '../model/invalid-data.model';
   providedIn: 'root'
 })
 export class InvalidDataService {
-  private apiUrl = 'https://localhost:44322/api/InvalidData'; // api end point
+  private apiUrl = 'https://localhost:7068/api/InvalidData'; // api end point
 
   constructor(private http: HttpClient) { }
 

@@ -29,11 +29,11 @@
   </ng-container>
   <ng-container matColumnDef="event_EffectiveDate">
     <th *matHeaderCellDef mat-sort-header>Event_EffectiveDate</th>
-    <td *matCellDef="let element">{{element.event_EffectiveDate}}</td>
+    <td *matCellDef="let element">{{element.event_EffectiveDate| date}}</td>
   </ng-container>
   <ng-container matColumnDef="event_AmmendmentDate">
     <th *matHeaderCellDef mat-sort-header>Event_AmmendmentDate</th>
-    <td *matCellDef="let element">{{element.event_AmmendmentDate }}</td>
+    <td *matCellDef="let element">{{element.event_AmmendmentDate | date}}</td>
   </ng-container>
   <ng-container matColumnDef="event_FileName">
     <th *matHeaderCellDef mat-sort-header>Event_FileName </th>
@@ -45,15 +45,15 @@
   </ng-container>
   <ng-container matColumnDef="ca_EffectiveDate">
     <th *matHeaderCellDef mat-sort-header>Ca_EffectiveDate</th>
-    <td *matCellDef="let element">{{element.ca_EffectiveDate}}</td>
+    <td *matCellDef="let element">{{element.ca_EffectiveDate | date}}</td>
   </ng-container>
   <ng-container matColumnDef="ca_AmmendmentDate">
     <th *matHeaderCellDef mat-sort-header>Ca_AmmendmentDate</th>
-    <td *matCellDef="let element">{{element.ca_AmmendmentDate }}</td>
+    <td *matCellDef="let element">{{element.ca_AmmendmentDate | date}}</td>
   </ng-container>
   <ng-container matColumnDef="ca_Created">
     <th *matHeaderCellDef mat-sort-header>Ca_Created</th>
-    <td *matCellDef="let element">{{element.ca_Created }}</td>
+    <td *matCellDef="let element">{{element.ca_Created | date}}</td>
   </ng-container>
   <ng-container matColumnDef="ca_RefId">
     <th *matHeaderCellDef mat-sort-header>RefId</th>

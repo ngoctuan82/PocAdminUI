@@ -1,0 +1,26 @@
+@startuml PocAdminUI
+
+package "PocAdminUI" {
+  [index.html]
+  [app-root]
+  [Environment Files]
+  [Services]
+  
+  package "Angular Material" {
+    [Material Icons]
+    [Typography]
+  }
+}
+
+cloud "API" {
+  [Backend Services]
+}
+
+[index.html] --> [app-root] : contains
+[app-root] --> [Services] : uses
+[Services] --> [Environment Files] : imports
+[Services] --> [Backend Services] : communicates
+[index.html] --> [Material Icons] : includes
+[index.html] --> [Typography] : uses
+
+@enduml

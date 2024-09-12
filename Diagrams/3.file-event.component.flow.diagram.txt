@@ -1,0 +1,41 @@
+@startuml FileEventComponent_Flow
+
+actor User
+participant "FileEventComponent" as Comp
+participant "Store" as Store
+participant "FileEventActions" as Act
+participant "FileEventSelectors" as Sel
+participant "State" as State
+
+User -> Comp : 1. Component Initialized
+activate Comp
+
+Comp -> Store : 2. Dispatch getFileEventList()
+activate Store
+Store -> Act : 3. getFileEventList Action
+deactivate Store
+
+Comp -> Store : 4. Select fileEventList$
+activate Store
+Store -> Sel : 5. Use selector
+Sel -> State : 6. Query state
+State --> Sel : 7. Return data
+Sel --> Store : 8. Return Observable
+Store --> Comp : 9. Subscribe to Observable
+deactivate Store
+
+Comp -> Comp : 10. Update dataSource
+Comp -> Comp : 11. Initialize paginator
+
+Comp -> Store : 12. Select loading$
+activate Store
+Store -> Sel : 13. Use loading selector
+Sel -> State : 14. Query state
+State --> Sel : 15. Return loading status
+Sel --> Store : 16. Return Observable
+Store --> Comp : 17. Subscribe to loading Observable
+deactivate Store
+
+deactivate Comp
+
+@enduml

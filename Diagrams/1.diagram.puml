@@ -1,3 +1,6 @@
+/**
+ * Starts the PlantUML diagram for the "PocAdminUI" package.
+ */
 @startuml PocAdminUI
 
 package "PocAdminUI" {

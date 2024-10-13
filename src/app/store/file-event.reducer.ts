@@ -17,17 +17,17 @@ const initialState: FileEventState = {
 export const fileEventReducer = createReducer(
   initialState,
   on(FileEventActions.getFileEventByRefId, state => ({
-    ...state,
+    ...state,     // create a new state object with the same properties as the current state
     loading: true,
     error: null
   })),
   on(FileEventActions.getFileEventByIdSuccess, (state, { fileEventList }) => ({
-    ...state,
+    ...state,   // create a new state object with the same properties as the current state
     fileEventList,
     loading: false
   })),
   on(FileEventActions.getFileEventByIdFailure, (state, { error }) => ({
-    ...state,
+    ...state,   // create a new state object with the same properties as the current state
     loading: false,
     error
   }))

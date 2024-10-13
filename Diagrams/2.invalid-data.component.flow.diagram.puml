@@ -1,0 +1,32 @@
+@startuml InvalidDataComponent_Flow
+
+actor User
+participant "InvalidDataComponent" as Comp
+participant "Store" as Store
+participant "InvalidDataActions" as Act
+participant "InvalidDataSelectors" as Sel
+participant "State" as State
+
+User -> Comp : 1. Component Initialized
+activate Comp
+
+Comp -> Store : 2. Dispatch getInvalidDataList()
+activate Store
+Store -> Act : 3. getInvalidDataList Action
+deactivate Store
+
+Comp -> Store : 4. Select invalidDataList$
+activate Store
+Store -> Sel : 5. Use selector
+Sel -> State : 6. Query state
+State --> Sel : 7. Return data
+Sel --> Store : 8. Return Observable
+Store --> Comp : 9. Subscribe to Observable
+deactivate Store
+
+Comp -> Comp : 10. Update dataSource
+Comp -> Comp : 11. Initialize paginator
+
+deactivate Comp
+
+@enduml

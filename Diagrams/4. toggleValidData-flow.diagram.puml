@@ -1,0 +1,38 @@
+@startuml FileEvent_InvalidData_Interaction
+
+actor User
+participant "FileEventComponent" as FEC
+participant "Store" as Store
+participant "FileEventActions" as FEA
+participant "InvalidDataComponent" as IDC
+participant "InvalidDataSelectors" as IDS
+participant "State" as State
+
+User -> FEC : 1. Click Toggle Button
+activate FEC
+
+FEC -> Store : 2. Dispatch toggleValidateData(id)
+activate Store
+Store -> FEA : 3. toggleValidateData Action
+FEA -> Store : 4. Update State
+deactivate Store
+
+State --> IDC : 5. State Change Detected
+activate IDC
+
+IDC -> Store : 6. Select invalidDataList$
+activate Store
+Store -> IDS : 7. Use selector
+IDS -> State : 8. Query updated state
+State --> IDS : 9. Return updated data
+IDS --> Store : 10. Return Observable
+Store --> IDC : 11. Emit Updated Data
+deactivate Store
+
+IDC -> IDC : 12. Update dataSource
+IDC -> IDC : 13. Refresh Table View
+
+deactivate IDC
+deactivate FEC
+
+@enduml

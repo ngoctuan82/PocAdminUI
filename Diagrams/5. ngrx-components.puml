@@ -1,0 +1,70 @@
+
+@startuml NgRx_Flow_PocAdminUI
+
+package "Components" {
+  [InvalidDataComponent]
+  [FileEventComponent]
+}
+
+package "Actions" {
+  [InvalidDataActions]
+  [FileEventActions]
+}
+
+package "Reducers" {
+  [InvalidDataReducer]
+  [FileEventReducer]
+}
+
+package "Selectors" {
+  [InvalidDataSelectors]
+  [FileEventSelectors]
+}
+
+package "Effects" {
+  [InvalidDataEffects]
+  [FileEventEffects]
+}
+
+package "Services" {
+  [AdminService]
+}
+
+database "Store" {
+  [AppState]
+}
+
+cloud "API" {
+  [Backend]
+}
+
+[InvalidDataComponent] --> [InvalidDataActions] : Dispatches getInvalidDataList
+[FileEventComponent] --> [FileEventActions] : Dispatches getFileEventList
+[InvalidDataActions] --> [InvalidDataReducer] : Triggers state updates
+[FileEventActions] --> [FileEventReducer] : Triggers state updates
+[InvalidDataReducer] --> [AppState] : Updates invalidDataList
+[FileEventReducer] --> [AppState] : Updates fileEventList
+[InvalidDataEffects] --> [AdminService] : Calls getInvalidDataList
+[FileEventEffects] --> [AdminService] : Calls getFileEventList
+[AdminService] --> [Backend] : Makes HTTP requests
+[Backend] --> [AdminService] : Returns data
+[AdminService] --> [InvalidDataEffects] : Returns response
+[AdminService] --> [FileEventEffects] : Returns response
+[InvalidDataEffects] --> [InvalidDataActions] : Dispatches success actions
+[FileEventEffects] --> [FileEventActions] : Dispatches success actions
+[InvalidDataSelectors] --> [AppState] : Queries invalidDataList
+[FileEventSelectors] --> [AppState] : Queries fileEventList
+[InvalidDataComponent] --> [InvalidDataSelectors] : Selects invalidDataList
+[FileEventComponent] --> [FileEventSelectors] : Selects fileEventList
+
+note right of [InvalidDataActions]
+  getInvalidDataList
+  getInvalidDataListSuccess
+end note
+
+note right of [FileEventActions]
+  getFileEventList
+  getFileEventListSuccess
+end note
+
+@enduml

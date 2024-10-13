@@ -19,17 +19,17 @@ const initialState: InvalidDataState = {
 export const invalidDataReducer = createReducer(
   initialState,
   on(InvalidDataActions.getInvalidDataList, state => ({
-    ...state, 
+    ...state, // create a new state object with the same properties as the current state
     loading: true,
     error: null
   })),
   on(InvalidDataActions.getInvalidDataListSuccess, (state, { invalidDataList: invalidDataList }) => ({
-    ...state,
+    ...state, // create a new state object with the same properties as the current state
     invalidDataList: invalidDataList,
     loading: false
   })),
   on(InvalidDataActions.getInvalidDataListFailure, (state, { error }) => ({
-    ...state,
+    ...state, // create a new state object with the same properties as the current state
     loading: false,
     error
   })),
@@ -37,9 +37,11 @@ export const invalidDataReducer = createReducer(
   {
     console.log('Validating data with id: ' , id);
     return {
-    ...state,
+    ...state, // create a new state object with the same properties as the current state
     invalidDataList: state.invalidDataList.map(item =>
       item.event_Id === id ? { ...item, validated: !item.validated } : item
+        // For the matching item, create a new object with all properties from the original item,
+        // then overwrite with properties from the updated data
     )
     }
 })

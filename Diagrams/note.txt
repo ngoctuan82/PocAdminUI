@@ -1,0 +1,175 @@
+The origins of store solutions can be traced back to Facebook's development of the Flux architecture. This arose from challenges they faced with their chat application, which highlighted several issues in managing complex application state.
+
+The root of the Facebook counter problem stemmed from discrepancies between the Model and View Model, leading to inconsistent UI updates.
+
+Facebook Chat Problem 1 involved managing multiple view models for the same business data, causing synchronization issues across different parts of the application.
+
+Facebook Chat Problem 2 addressed the shared data ownership and data encapsulation problem, where different components needed access to the same data but struggled with maintaining consistency.
+
+Facebook Chat Problem 3 focused on avoiding "spinner" applications, where the UI would frequently show loading indicators due to constant Ajax requests.
+
+The Store Pattern emerged as a solution to these problems. It introduced a centralized state management approach, providing a single source of truth for the application's data.
+
+The Store, Actions, Reducers, and Selectors work together to solve the Facebook counter problem:
+
+The Store holds the entire application state.
+Actions describe state changes.
+Reducers specify how the state changes in response to actions.
+Selectors efficiently derive and compute derived data from the store.
+This pattern ensures consistent state updates, improves data flow, and enhances the overall maintainability of complex applications.
+
+Facebook Chat Problem 1 involved managing multiple view models for the same business data, which caused synchronization issues across different parts of the application. This problem is common in complex applications where the same data needs to be displayed in multiple places, each potentially in a different format or with different associated functionality.
+
+Let's consider an example using the chat application:
+
+Imagine a user, Alice, who is part of multiple chat conversations. The application needs to display:
+
+A list of all conversations in the sidebar
+The current active conversation in the main chat window
+A notification badge showing the total number of unread messages
+Each of these views represents the same underlying data (chat conversations) but in different ways:
+
+The sidebar list might show a preview of the last message and the conversation name.
+The main chat window shows the full conversation history.
+The notification badge just needs a count of unread messages.
+When Alice receives a new message, all these views need to update simultaneously:
+
+The sidebar should move the conversation to the top and update the preview.
+If the conversation is currently open, the main chat window should display the new message.
+The notification badge should increment its count.
+Without a centralized state management solution, each of these views might have its own copy of the conversation data. This leads to several problems:
+
+Data duplication: The same information is stored in multiple places.
+Synchronization issues: If one view updates, the others might not reflect the change immediately.
+Inconsistent updates: Different views might update at different times, leading to a confusing user experience.
+Increased complexity: Developers need to manage data flow between all these different representations.
+The store pattern, as implemented in solutions like NgRx, solves this by providing a single source of truth. All views derive their data from this central store, ensuring consistency across the application. When a new message arrives, a single action can update the store, and all views will automatically reflect this change, maintaining a synchronized and consistent user interface.
+
+Facebook Chat Problem 2 regarding shared data ownership and data encapsulation.
+
+Let's consider a chat application with multiple components:
+
+ChatListComponent: Displays a list of all chats
+ChatWindowComponent: Shows the current active chat
+UnreadMessagesBadgeComponent: Displays the total number of unread messages
+Without a centralized store, each component might manage its own data:
+
+@Component({...})
+export class ChatListComponent {
+  chats: Chat[] = [];
+  
+  updateChat(chatId: string, message: string) {
+    const chat = this.chats.find(c => c.id === chatId);
+    if (chat) {
+      chat.lastMessage = message;
+      chat.unreadCount++;
+    }
+  }
+}
+
+Copy
+
+Apply
+
+chat-list.component.ts
+@Component({...})
+export class ChatWindowComponent {
+  activeChat: Chat | null = null;
+  
+  receiveMessage(message: string) {
+    if (this.activeChat) {
+      this.activeChat.messages.push(message);
+    }
+  }
+}
+
+Copy
+
+Apply
+
+chat-window.component.ts
+@Component({...})
+export class UnreadMessagesBadgeComponent {
+  totalUnread: number = 0;
+  
+  incrementUnread() {
+    this.totalUnread++;
+  }
+}
+
+Copy
+
+Apply
+
+unread-messages-badge.component.ts
+In this setup, when a new message arrives, you'd need to update all three components separately, leading to potential inconsistencies and making it difficult to maintain data integrity across the application.
+
+Using NgRx, you can centralize this data management:
+
+export const receiveMessage = createAction('[Chat] Receive Message', props<{ chatId: string, message: string }>());
+
+Copy
+
+Apply
+
+chat.actions.ts
+export const chatReducer = createReducer(
+  initialState,
+  on(receiveMessage, (state, { chatId, message }) => {
+    const updatedChats = state.chats.map(chat => 
+      chat.id === chatId 
+        ? { ...chat, lastMessage: message, unreadCount: chat.unreadCount + 1, messages: [...chat.messages, message] }
+        : chat
+    );
+    return {
+      ...state,
+      chats: updatedChats,
+      totalUnread: state.totalUnread + 1
+    };
+  })
+);
+
+Copy
+
+Apply
+
+chat.reducer.ts
+Now, all components can access this centralized state, ensuring consistency:
+
+@Component({...})
+export class ChatListComponent {
+  chats$ = this.store.select(selectAllChats);
+  
+  constructor(private store: Store) {}
+}
+
+Copy
+
+Apply
+
+chat-list.component.ts
+@Component({...})
+export class ChatWindowComponent {
+  activeChat$ = this.store.select(selectActiveChat);
+  
+  constructor(private store: Store) {}
+}
+
+Copy
+
+Apply
+
+chat-window.component.ts
+@Component({...})
+export class UnreadMessagesBadgeComponent {
+  totalUnread$ = this.store.select(selectTotalUnread);
+  
+  constructor(private store: Store) {}
+}
+
+Copy
+
+Apply
+
+unread-messages-badge.component.ts
+This approach solves the shared data ownership problem by providing a single source of truth, ensuring all components stay in sync when data changes.

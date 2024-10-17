@@ -1,0 +1,32 @@
+graph TD
+    subgraph Chat Interface
+        A[Sidebar] --> |Lists| B[Conversations]
+        C[Main Chat Window] --> |Displays| D[Active Conversation]
+        E[Notification Badge] --> |Shows| F[Unread Message Count]
+    end
+
+    subgraph Data Source
+        G[Chat Conversations Data]
+    end
+
+    G --> A
+    G --> C
+    G --> E
+
+    subgraph Sidebar View
+        B --> H[Conversation Name]
+        B --> I[Last Message Preview]
+    end
+
+    subgraph Main Chat View
+        D --> J[Full Conversation History]
+    end
+
+    subgraph New Message Event
+        K[New Message Received]
+        K --> |Update| A
+        K --> |Update| C
+        K --> |Increment| E
+    end
+
+    L[Alice] --> K

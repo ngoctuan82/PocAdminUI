@@ -1,0 +1,19 @@
+graph TD
+    subgraph "Without Centralized Store"
+        A[ChatListComponent] --> |owns| A1[chats]
+        B[ChatWindowComponent] --> |owns| B1[activeChat]
+        C[UnreadMessagesBadgeComponent] --> |owns| C1[totalUnread]
+        D[New Message] --> A
+        D --> B
+        D --> C
+    end
+
+    subgraph "With NgRx Store"
+        E[NgRx Store] --> |contains| E1[chats]
+        E --> |contains| E2[activeChat]
+        E --> |contains| E3[totalUnread]
+        F[ChatListComponent] --> |selects| E1
+        G[ChatWindowComponent] --> |selects| E2
+        H[UnreadMessagesBadgeComponent] --> |selects| E3
+        I[New Message] --> |dispatches action| E
+    end
